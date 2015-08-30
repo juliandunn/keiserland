@@ -1,0 +1,14 @@
+ServerRoot "/etc/httpd"
+Listen <%= @port %>
+Include conf.modules.d/*.conf
+User apache
+Group apache
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+DocumentRoot "/var/www/vhosts/<%= @instance_name %>"
+<IfModule mime_module>
+  # Silly RHEL, putting things in non-standard locations    
+  TypesConfig /etc/mime.types
+</IfModule>

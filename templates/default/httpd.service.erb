@@ -1,0 +1,16 @@
+[Unit]
+Description=The Apache HTTP Server - instance <%= @instance_name %>
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=notify
+
+ExecStart=/usr/sbin/httpd -f /etc/httpd/conf/httpd-<%= @instance_name %>.conf -DFOREGROUND
+ExecReload=/usr/sbin/httpd -f /etc/httpd/conf/httpd-<%= @instance_name %>.conf -k graceful
+ExecStop=/bin/kill -WINCH ${MAINPID}
+
+KillSignal=SIGCONT
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
