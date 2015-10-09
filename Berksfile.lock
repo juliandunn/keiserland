@@ -1,0 +1,11 @@
+DEPENDENCIES
+  keiserland
+    path: .
+    metadata: true
+  keiserland_test
+    path: test/cookbooks/keiserland_test
+
+GRAPH
+  keiserland (0.1.0)
+  keiserland_test (0.0.1)
+    keiserland (>= 0.0.0)
