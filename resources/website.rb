@@ -28,18 +28,7 @@ action :create do
     action :install
   end
 
-  template "/lib/systemd/system/httpd-#{instance_name}.service" do
-    source "httpd.service.erb"
-    variables(
-      :instance_name => instance_name
-    )
-    owner 'root'
-    group 'root'
-    mode '0644'
-    action :create
-  end
-
-  template "/etc/httpd/conf/httpd-#{instance_name}.conf" do
+  template "/etc/httpd/conf.d/httpd-#{instance_name}.conf" do
     source "httpd.conf.erb"
     variables(
       :instance_name => instance_name,
@@ -49,6 +38,7 @@ action :create do
     group 'root'
     mode '0644'
     action :create
+    notifies :restart, 'service[httpd]'
   end
 
   directory "/var/www/vhosts/#{instance_name}" do
@@ -57,9 +47,10 @@ action :create do
     owner 'root'
     group 'root'
     action :create
+    notifies :restart, 'service[httpd]'
   end
 
-  service "httpd-#{instance_name}" do
+  service "httpd" do
     action [:enable, :start]
   end
 end

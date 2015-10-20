@@ -21,3 +21,8 @@ keisersite 'wat' do
   port 81
   action :create
 end
+
+keisersite 'lol' do
+  port 82
+  action :create
+end
